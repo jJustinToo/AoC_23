@@ -28,8 +28,9 @@ def main():
                 else: 
                     blue.append(int(input[i][j][input[i][j].find('blue') - 2]))
         
-        if max(red) <= redCubes and max(green) <= greenCubes and max(blue) <= blueCubes:
-            sum += i + 1
+        # print(f'{red} + {green} + {blue}')
+        power = (max(red) * max(green) * max(blue))
+        sum += power
                     
     print(sum)
     return
