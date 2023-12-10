@@ -13,18 +13,22 @@ def main():
             if index >= 0:
                 input[i] = input[i].replace(numbers[k], numbers[k] + str(k) + numbers[k])
         
-        a = 0
-        for letter in input[i]:
-            if letter.isnumeric() and a == 0:
-                a = int(letter)
-                b = int(letter)
-            elif letter.isnumeric(): 
-                b = int(letter)
-        
-        sum += (a * 10) + b 
+        sum += calibrationValue(input[i])
     
     print(sum)    
     return
+
+
+def calibrationValue(input):
+    a = 0
+    for letter in input:
+        if letter.isnumeric() and a == 0:
+            a = int(letter)
+            b = int(letter)
+        elif letter.isnumeric(): 
+            b = int(letter)
+    
+    return (a * 10) + b 
 
 
 main()
