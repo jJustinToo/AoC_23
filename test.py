@@ -20,23 +20,19 @@ def main():
     
     output = ''
     
-    for i in range(len(input)):
+    # for i in range(len(input)):
+    i = 0
+    while i < len(input):
         if i in indexOfNums:
             posOfNum = indexOfNums.index(i) # 1
             numberValue = stringNums[posOfNum] # 2
             print(numberValue, end='') 
             
-            
-            # Skip to two len away
-            # if i > 
-            
-            # newPos should be i + len(blah) 
-            # But if newPos is greater than or equal to another item in index besides 'i'
-            # Set i = the value that it is greater than or equal to. 
-            # 
+            i += 1
             
         else: 
             print(input[i], end='')
+            i += 1
 
     
     print(output)

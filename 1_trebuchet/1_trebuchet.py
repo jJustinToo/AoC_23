@@ -4,7 +4,7 @@ def main():
     # a1b2c3d4e5f = 15
     # treb7uchet = 77
     
-    with open("./1_trebuchet/test.txt", 'r') as file:
+    with open("./1_trebuchet/input.txt", 'r') as file:
         input = file.readlines()
         
     sum = 0
@@ -14,20 +14,46 @@ def main():
     for i in range(len(input)):
         input[i] = input[i].strip("\n")
         
-        # Turns ALPHABETICAL INTO NUMERICAL FORM
+        stringNums = []
+        indexOfNums = []
+        
         for k in range(len(numbers)):
             index = input[i].find(numbers[k])
             if index >= 0:
-                input[i] = input[i].replace(numbers[k], str(k) + numbers[k])
-                # input[i] = input[i][:index] + str(k) + input[i][index:]
+                stringNums.append(k)
+                indexOfNums.append(index)
+        
+        # print(stringNums)
+        # print(indexOfNums)
+        
+        output = ''
+        
+        for j in range(len(input[i])):
+            if j in indexOfNums:
+                posOfNum = indexOfNums.index(j) # 1
+                numberValue = stringNums[posOfNum] # 2
+                # print(numberValue, end='') 
+                output += str(numberValue)
+                
+                # Skip to two len away
+                # if i > 
+                
+                # newPos should be i + len(blah) 
+                # But if newPos is greater than or equal to another item in index besides 'i'
+                # Set i = the value that it is greater than or equal to. 
+                # 
+                
+            else: 
+                # print(input[i][j], end='')
+                output += str(input[i][j])
 
-        for num in numbers:
-            input[i] = input[i].replace(num, '')
         
-        
+        print(output)
+        input[i] = output
         # Changed Sentence
-        print(input[i])
+        # print(input[i])
         a = 0
+        b = 0
         for letter in input[i]:
             if letter.isnumeric() and a == 0:
                 a = int(letter)
