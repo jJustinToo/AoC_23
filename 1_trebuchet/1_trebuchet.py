@@ -4,7 +4,7 @@ def main():
     # a1b2c3d4e5f = 15
     # treb7uchet = 77
     
-    with open("./1_trebuchet/input.txt", 'r') as file:
+    with open("./1_trebuchet/test.txt", 'r') as file:
         input = file.readlines()
         
     sum = 0
@@ -14,15 +14,18 @@ def main():
     for i in range(len(input)):
         input[i] = input[i].strip("\n")
         
+        # Turns ALPHABETICAL INTO NUMERICAL FORM
         for k in range(len(numbers)):
             index = input[i].find(numbers[k])
             if index >= 0:
-                # input[i] = input[i].replace(numbers[k], str(k))
-                input[i] = input[i][:index] + str(k) + input[i][index:]
+                input[i] = input[i].replace(numbers[k], str(k) + numbers[k])
+                # input[i] = input[i][:index] + str(k) + input[i][index:]
 
         for num in numbers:
             input[i] = input[i].replace(num, '')
         
+        
+        # Changed Sentence
         print(input[i])
         a = 0
         for letter in input[i]:
