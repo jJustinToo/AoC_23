@@ -18,12 +18,8 @@ def main():
             
             num = int(num)
             
-            if isSymbol(i, start - 1) or isSymbol(i, j):
-                ans += num
-                continue
-            
             for k in range(start-1, j + 1):
-                if isSymbol(i-1, k) or isSymbol(i+1, k):
+                if isSymbol(i, start - 1) or isSymbol(i, j) or isSymbol(i-1, k) or isSymbol(i+1, k):
                     ans += num
                     break
             
@@ -32,11 +28,7 @@ def main():
 
 def isSymbol(row, col):
     symbols = '!@#$%^?><,/&*+_=-'
-    
-    if not (0 <= row < len(input) and 0 <= col < len(input[0])):
-        return False
-    
-    if input[row][col] in symbols:
+    if (0 <= row < len(input) and 0 <= col < len(input[0]) and input[row][col] in symbols):
         return True
     else: 
         return False
