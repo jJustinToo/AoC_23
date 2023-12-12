@@ -11,3 +11,4 @@ if name not in os.listdir():
         file.write(f"with open('./{name}/input.txt', 'r') as file:\n    input = file.readlines()\n\ndef main():\n    \n    return\n\nmain()")
     open(f"./{name}/{challengeName}_2.py", "w").close()
     open(f"./{name}/input.txt", "w").close()
+    open(f"./{name}/example.txt", "w").close()
