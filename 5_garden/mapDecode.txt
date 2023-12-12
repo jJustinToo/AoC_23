@@ -1,0 +1,33 @@
+seed-to-soil map:
+50 98 2
+a b c
+info[0], info[1], info[2]
+52 50 48
+
+50 is DESTINATION_RANGE_START
+98 is SOURCE_RANGE_START
+2 is RANGE_LENGTH
+
+
+53 
+
+53
+49
+
+
+49 53 8
+0 11 42
+42 0 7
+57 7 4
+
+
+98 = 50
+
+14
+
+seed soil fert water light temp hum loc
+
+
+    for seed in seeds:
+        soils.append(map(seed, checkMap(seed, getMap(seedPos, soilPos))))
+    print(soils)
