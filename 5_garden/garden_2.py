@@ -1,33 +1,52 @@
-inputs, *blocks = open('5_garden/input.txt').read().split("\n\n")
+with open('./5_garden/input.txt', 'r') as file:
+    inputs = file.readlines()
 
-inputs = list(map(int, inputs.split(":")[1].split()))
+def main():
+    seed = list(map(int, inputs[0].strip("\n").split(" ")[1:]))
 
-seeds = []
-for i in range(0, len(inputs), 2):
-    seeds.append((inputs[i], inputs[i] + inputs[i + 1]))
+    seeds = []
+    for i in range(0, len(seed), 2):
+        seeds.append((seed[i], seed[i] + seed[i + 1]))
 
-for block in blocks:
-    # Iterate over every block
-    maps = []
-    for line in block.splitlines()[1:]:
-        maps.append(list(map(int, line.split())))
+    for maps in findMaps():
+        newSeeds = []
+        while len(seeds) > 0:
+            start, end = seeds.pop() # Get the start and end range of a seed. 
+            for dstStart, srcStart, rangeLen in maps: # Iterates over every map. 
+                overlap_s = max(start, srcStart) # Overlap start. 
+                overlap_e = min(end, srcStart + rangeLen) # Overlap 
+                if overlap_s < overlap_e: # If there is overlap
+                    newSeeds.append((overlap_s - srcStart + dstStart, overlap_e - srcStart + dstStart))
+                    if overlap_s > start: # If there are some values not in the overlap.
+                        seeds.append((start, overlap_s))
+                    if end > overlap_e: # If there is some values after the overlap/
+                        seeds.append((overlap_e, end))
+                    break
+            else:
+                newSeeds.append((start, end))
+        seeds = newSeeds
+        
     
-    # print(maps[0])
-    newSeeds = []
-    while len(seeds) > 0:
-        start, end = seeds.pop() # Get the start and end range of a seed. 
-        for dstStart, srcStart, rangeLen in maps: # Iterates over every map. 
-            os = max(start, srcStart) # Overlap start. 
-            oe = min(end, srcStart + rangeLen) # Overlap 
-            if os < oe: # If there is overlap
-                newSeeds.append((os - srcStart + dstStart, oe - srcStart + dstStart))
-                if os > start: # If there are some values not in the overlap.
-                    seeds.append((start, os))
-                if end > oe: # If there is some values after the overlap/
-                    seeds.append((oe, end))
-                break
-        else:
-            newSeeds.append((start, end))
-    seeds = newSeeds
-# print(sorted(seeds))
-print(min(seeds)[0])
+    print(min(seeds)[0])
+    
+
+def findMaps():
+    maps = []
+    i = 2
+    while i < len(inputs):
+        mapss = []
+        
+        i += 1
+        while i < len(inputs) and not inputs[i] == "\n":
+            dstStart, srcStart, rangeLen = map(int, inputs[i].strip('\n').split())
+            list = [dstStart, srcStart, rangeLen]
+            mapss.append(list)
+            i += 1
+        
+        maps.append(mapss)    
+        i += 1
+        
+    return maps
+
+
+main()

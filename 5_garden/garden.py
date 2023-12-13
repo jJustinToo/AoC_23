@@ -1,4 +1,4 @@
-with open('./5_garden/example.txt', 'r') as file:
+with open('./5_garden/input.txt', 'r') as file:
     input = file.readlines()
 
 def main():
