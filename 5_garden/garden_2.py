@@ -1,46 +1,33 @@
-with open('./5_garden/example.txt', 'r') as file:
-    input = file.readlines()
+inputs, *blocks = open('5_garden/input.txt').read().split("\n\n")
 
-def main():
-    seeds = list(map(int, input[0].strip("\n").split(" ")[1:]))
-    
-    maps = findMaps()
-    
-    seedRanges = []
-    for s in range(0, len(seeds), 2):
-        seedRanges.append((seeds[s], seeds[s] + seeds[s+1]))
+inputs = list(map(int, inputs.split(":")[1].split()))
 
-    print(seedRanges)
-    
-    # (1, 100)
-    # (1, 50) (50, 98) (98, 100)    
+seeds = []
+for i in range(0, len(inputs), 2):
+    seeds.append((inputs[i], inputs[i] + inputs[i + 1]))
 
-def findMaps():
+for block in blocks:
+    # Iterate over every block
     maps = []
-    i = 2
-    while i < len(input):
-        mapss = []
-        
-        i += 1
-        while i < len(input) and not input[i] == "\n":
-            dstStart, srcStart, rangeLen = map(int, input[i].strip('\n').split())
-            mapss.append((dstStart, srcStart, rangeLen))
-            i += 1
-        
-        maps.append(mapss)    
-        i += 1
-        
-    return maps
-        
-def findLocation(input, maps):
-    num = input
-    for map in maps:
-        for dstStart, srcStart, rangeLen in map:
-            if srcStart <= num < srcStart + rangeLen:
-                num = num - srcStart + dstStart
+    for line in block.splitlines()[1:]:
+        maps.append(list(map(int, line.split())))
+    
+    # print(maps[0])
+    newSeeds = []
+    while len(seeds) > 0:
+        start, end = seeds.pop() # Get the start and end range of a seed. 
+        for dstStart, srcStart, rangeLen in maps: # Iterates over every map. 
+            os = max(start, srcStart) # Overlap start. 
+            oe = min(end, srcStart + rangeLen) # Overlap 
+            if os < oe: # If there is overlap
+                newSeeds.append((os - srcStart + dstStart, oe - srcStart + dstStart))
+                if os > start: # If there are some values not in the overlap.
+                    seeds.append((start, os))
+                if end > oe: # If there is some values after the overlap/
+                    seeds.append((oe, end))
                 break
-                
-    return num
-
-
-main()
+        else:
+            newSeeds.append((start, end))
+    seeds = newSeeds
+# print(sorted(seeds))
+print(min(seeds)[0])

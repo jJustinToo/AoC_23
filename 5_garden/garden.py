@@ -7,10 +7,9 @@ def main():
     maps = findMaps()
     
     locs = []
-    for s in range(0, len(seeds), 2):
-        for i in range(seeds[s], seeds[s] + seeds[s+1]):
-            loc = findLocation(i, maps)
-            locs.append(loc)
+    for seed in seeds:
+        loc = findLocation(seed, maps)
+        locs.append(loc)
 
     print(min(locs))
 
