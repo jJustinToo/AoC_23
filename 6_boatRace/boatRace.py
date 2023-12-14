@@ -1,30 +1,25 @@
-with open('./6_boatRace/input.txt', 'r') as file:
+with open('./6_boatRace/example.txt', 'r') as file:
     input = file.readlines()
 
 def main():
     
     # Holding down for 1 second. speed += 1. 
     
-    times = input[0].split()[1:]
-    records = input[1].split()[1:]
+    times = list(map(int, input[0].split()[1:]))
+    records = list(map(int, input[1].split()[1:]))
     
-    newTime = ''
-    for time in times:
-        newTime += time
-    newTime = int(newTime)
-    
-    newRecord = ''
-    for record in records:
-        newRecord += record
-    newRecord = int(newRecord)
-    
-    count = 0
-    for holdTime in range(newTime):
-        distance = (newTime - holdTime) * holdTime
-        if distance > newRecord:
-            count += 1
+    ans = 1
+    for i, time in enumerate(times):
+        count = 0
+        for holdTime in range(time):
+            distance = (time - holdTime) * holdTime
+            if distance > records[i]:
+                count += 1
 
-    print(count)
+        ans = ans * count
+        
+        
+    print(ans)
     return
 
 
