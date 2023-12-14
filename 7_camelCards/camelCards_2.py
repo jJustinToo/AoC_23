@@ -45,33 +45,28 @@ def getHand(hand):
             blocked += char
             counts.append(hand.count(char))
     
-    if counts == []:
-        counts.append(0)
-    
-    amounts = sorted(counts)
-    
     jokers = hand.count("J")
-        
-    amounts = sorted(counts)
-    if jokers >= 5 or amounts[-1] + jokers >= 5:
+    
+    counts = sorted(counts)
+    if counts == []:
+        counts.append(jokers)
+    else: 
+        counts[-1] += jokers
+
+    if max(counts) == 5:
         return 7
-    if jokers >= 4 or amounts[-1] + jokers >= 4:
+    elif max(counts) == 4:
         return 6
-
-    # Try a full house
-    if amounts[-1] + jokers >= 3:
-        rem_jokers = amounts[-1] + jokers - 3
-        if len(amounts) >= 2 and amounts[-2] + rem_jokers >= 2 or rem_jokers >= 2:
-            return 5
+    elif max(counts) == 3 and 2 in counts:
+        return 5
+    elif max(counts) == 3:
         return 4
-
-    if amounts[-1] + jokers >= 2:
-        rem_jokers = amounts[-1] + jokers - 2
-        if len(amounts) >= 2 and amounts[-2] + rem_jokers >= 2 or rem_jokers >= 2:
-            return 3
+    elif counts.count(2) == 2:
+        return 3
+    elif counts.count(2) == 1:
         return 2
-
-    return 1
+    elif counts.count(1) == 5:
+        return 1
 
 def selectionSort(hands):
     for i in range(len(hands)):
