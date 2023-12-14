@@ -5,22 +5,20 @@ def main():
     seed = list(map(int, inputs[0].strip("\n").split(" ")[1:]))
 
     seeds = []
-    for i in range(0, len(seed), 2):
-        seeds.append((seed[i], seed[i] + seed[i + 1]))
+    seeds.extend([(seed[i], seed[i] + seed[i + 1]) for i in range(0, len(seed), 2)])       
 
     for maps in findMaps():
         newSeeds = []
-        while len(seeds) > 0:
-            start, end = seeds.pop() # Get the start and end range of a seed. 
+        for start, end in seeds:
             for dstStart, srcStart, rangeLen in maps: # Iterates over every map. 
-                overlap_s = max(start, srcStart) # Overlap start. 
-                overlap_e = min(end, srcStart + rangeLen) # Overlap 
-                if overlap_s < overlap_e: # If there is overlap
-                    newSeeds.append((overlap_s - srcStart + dstStart, overlap_e - srcStart + dstStart))
-                    if overlap_s > start: # If there are some values not in the overlap.
-                        seeds.append((start, overlap_s))
-                    if end > overlap_e: # If there is some values after the overlap/
-                        seeds.append((overlap_e, end))
+                matchRange_s = max(start, srcStart) # Overlap start. 
+                matchRange_e = min(end, srcStart + rangeLen) # Overlap 
+                if matchRange_s < matchRange_e: # If there is overlap
+                    newSeeds.append((matchRange_s - srcStart + dstStart, matchRange_e - srcStart + dstStart))
+                    if matchRange_s > start: # If there are some values not in the overlap.
+                        seeds.append((start, matchRange_s))
+                    if end > matchRange_e: # If there is some values after the overlap/
+                        seeds.append((matchRange_e, end))
                     break
             else:
                 newSeeds.append((start, end))
