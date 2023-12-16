@@ -1,6 +1,16 @@
 import os
 
-dayInput = input("Day: ")
+while True:
+    try:
+        dayInput = input("Day: ")
+        dayInput = int(dayInput)
+        break
+    except ValueError:
+        print("Day number has to be a integer.")
+
+if dayInput < 10:
+    dayInput = f"0{dayInput}"
+
 challengeName = input("Case sensitive.\nChallenge Name: ")
 
 name = f'{dayInput}_{challengeName}'
