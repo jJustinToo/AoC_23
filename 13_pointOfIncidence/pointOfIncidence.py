@@ -21,8 +21,6 @@ def main():
                     ans += line[0]
             else:
                 ans += vertLine[0][0]
-                
-            ans += vertLine[0][0]
         else:
             print(horiLine, "Horizontal")
             
@@ -31,8 +29,6 @@ def main():
                     ans += line[0] * 100
             else:
                 ans += horiLine[0][0] * 100
-            
-            ans += horiLine[0][0] * 100
         
     print(ans)
     return
